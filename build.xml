@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="PadmagriyaCafe" default="war" basedir=".">
+    <property name="src.dir" value="src"/>
+    <property name="web.dir" value="web"/>
+    <property name="build.dir" value="build"/>
+    <property name="classes.dir" value="${build.dir}/WEB-INF/classes"/>
+    <property name="dist.dir" value="dist"/>
+    <property name="war.file" value="${dist.dir}/PadmagriyaCafe.war"/>
+    <property name="lib.dir" value="lib"/>
+    <property name="javac.source" value="1.8"/>
+    <property name="javac.target" value="1.8"/>
+    <property name="app.url" value="http://localhost:8080/PadmagriyaCafe/"/>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
+    </target>
+
+    <target name="prepare">
+        <mkdir dir="${classes.dir}"/>
+        <mkdir dir="${dist.dir}"/>
+        <copy todir="${build.dir}">
+            <fileset dir="${web.dir}" excludes="WEB-INF/web.xml"/>
+        </copy>
+        <mkdir dir="${build.dir}/WEB-INF/lib"/>
+        <copy todir="${build.dir}/WEB-INF/lib">
+            <fileset dir="${lib.dir}" includes="*.jar" excludes="javax.servlet-api-*.jar"/>
+        </copy>
+    </target>
+
+    <target name="compile" depends="prepare">
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false" encoding="UTF-8"
+               source="${javac.source}" target="${javac.target}">
+            <classpath>
+                <fileset dir="${lib.dir}" includes="*.jar"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="war" depends="compile">
+        <war destfile="${war.file}" webxml="${web.dir}/WEB-INF/web.xml">
+            <fileset dir="${build.dir}"/>
+        </war>
+    </target>
+
+    <target name="dist" depends="war"/>
+
+    <target name="run" depends="war">
+        <echo message="Build selesai. WAR tersedia di ${war.file}."/>
+        <echo message="Membuka aplikasi di ${app.url}."/>
+        <exec executable="open" osfamily="mac" failonerror="false">
+            <arg value="${app.url}"/>
+        </exec>
+        <exec executable="cmd" osfamily="windows" failonerror="false">
+            <arg value="/c"/>
+            <arg value="start"/>
+            <arg value=""/>
+            <arg value="${app.url}"/>
+        </exec>
+    </target>
+</project>

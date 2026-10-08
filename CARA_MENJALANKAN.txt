@@ -1,0 +1,20 @@
+PADMAGRIYA CAFE - Cara Menjalankan (tanpa NetBeans)
+====================================================
+
+Yang perlu diinstall SEKALI saja di laptop:
+  Docker Desktop  -> https://www.docker.com/products/docker-desktop
+  (Windows: ikuti installer, restart kalau diminta, lalu buka Docker Desktop
+   dan tunggu sampai statusnya "Running")
+
+Menjalankan:
+  1. Extract folder ini.
+  2. Klik dua kali  JALANKAN.bat   (Mac/Linux: jalankan  docker compose up -d --build)
+  3. Tunggu sampai selesai, lalu buka  http://localhost:8080
+
+Login:
+  admin / admin123
+  kasir / kasir123
+  owner / owner123
+
+Menghentikan:  klik dua kali BERHENTI.bat
+Reset total (hapus data database):  docker compose down -v
